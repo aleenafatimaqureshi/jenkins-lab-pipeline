@@ -3,16 +3,16 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests?')
-    string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'Deploy target')
+    string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'Choose deploy environment')
   }
 
   environment {
-    MY_VAR = "lab12"
+    MY_VAR = "lab12_env"
     NODE_VERSION = "14.20.0"
   }
 
   tools {
-    // Only works if these exist in Jenkins -> Global Tool Configuration
+    // Only works if these tools exist inside Jenkins -> Global Tool Configuration
     jdk 'jdk11'
     maven 'Maven-3.8.8'
   }
@@ -21,7 +21,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        echo "Building... ENV: ${MY_VAR}"
+        echo "Building... Using env: ${MY_VAR}"
       }
     }
 
@@ -30,7 +30,7 @@ pipeline {
         expression { return params.RUN_TESTS == true }
       }
       steps {
-        echo "Running tests..."
+        echo "Running Tests..."
       }
     }
 
@@ -42,8 +42,14 @@ pipeline {
   }
 
   post {
-    success { echo "BUILD SUCCESS" }
-    failure { echo "BUILD FAILED" }
-    always  { echo "Cleanup / Always Executed" }
+    success {
+      echo "BUILD SUCCESS 🎯"
+    }
+    failure {
+      echo "BUILD FAILED ❌"
+    }
+    always {
+      echo "Pipeline Completed ✔ (Always runs)"
+    }
   }
 }
