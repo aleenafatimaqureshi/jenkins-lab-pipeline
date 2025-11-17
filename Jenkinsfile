@@ -11,12 +11,6 @@ pipeline {
     NODE_VERSION = "14.20.0"
   }
 
-  tools {
-    // Only works if these tools exist inside Jenkins -> Global Tool Configuration
-    jdk 'jdk11'
-    maven 'Maven-3.8.8'
-  }
-
   stages {
 
     stage('Build') {
